@@ -1,0 +1,808 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>AlertaAnimal | Monitoramento Veterinário</title>
+
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+
+    <!-- CABEÇALHO -->
+
+    <header>
+        <h1>🐾 AlertaAnimal</h1>
+        <p>Monitoramento de casos veterinários - Santos/SP</p>
+    </header>
+
+    <main class="container">
+
+        <!-- STATUS DO SERVIDOR -->
+
+        <div id="statusServidor" role="status">
+            Verificando conexão com o servidor...
+        </div>
+
+        <!-- INDICADORES DO DASHBOARD -->
+
+        <section class="dashboard">
+
+            <div class="card">
+                <h3>Total de casos</h3>
+                <span id="totalCasos">0</span>
+            </div>
+
+            <div class="card andamento">
+                <h3>Em andamento</h3>
+                <span id="totalAndamento">0</span>
+            </div>
+
+            <div class="card concluido">
+                <h3>Concluídos</h3>
+                <span id="totalConcluidos">0</span>
+            </div>
+
+            <div class="card critico">
+                <h3>Casos críticos ativos</h3>
+                <span id="totalCriticos">0</span>
+            </div>
+
+        </section>
+
+
+<!-- MONITORAMENTO EPIDEMIOLÓGICO -->
+
+<section class="painel" id="monitoramento">
+
+    <h2>Monitoramento epidemiológico</h2>
+
+    <p class="descricao">
+        Acompanhe a distribuição dos casos ativos
+        e identifique possíveis concentrações de doenças
+        nos bairros de Santos.
+    </p>
+
+    <div class="monitoramento-indicadores">
+
+        <div class="indicador-monitoramento">
+            <h3>Bairros com casos ativos</h3>
+            <span id="totalBairros">0</span>
+            <small>Bairros com registros em andamento</small>
+        </div>
+
+        <div class="indicador-monitoramento alerta">
+            <h3>Concentrações identificadas</h3>
+            <span id="totalAlertas">0</span>
+            <small>Possíveis situações de atenção</small>
+        </div>
+
+    </div>
+
+    <!-- GRÁFICOS -->
+
+    <div class="graficos-grid">
+
+        <div class="grafico-card">
+            <h3>Casos ativos por bairro</h3>
+            <div id="graficoBairros"></div>
+        </div>
+
+        <div class="grafico-card">
+            <h3>Casos ativos por doença</h3>
+            <div id="graficoDoencas"></div>
+        </div>
+
+        <div class="grafico-card">
+            <h3>Distribuição por espécie</h3>
+            <div id="graficoEspecies"></div>
+        </div>
+
+    </div>
+
+    <!-- CENTRAL DE ALERTAS -->
+
+    <div class="central-alertas">
+
+        <h3>Central de alertas epidemiológicos</h3>
+
+        <p class="descricao">
+            Concentrações de casos ativos da mesma
+            doença em um mesmo bairro.
+        </p>
+
+        <div id="listaAlertas"></div>
+
+        <div class="nota-monitoramento">
+            Os alertas utilizam critérios demonstrativos
+            do projeto e não representam a confirmação
+            oficial de surtos epidemiológicos.
+        </div>
+
+    </div>
+
+    <p id="erroMonitoramento" role="status"></p>
+
+</section>
+
+
+        <!-- FORMULÁRIO DE CADASTRO -->
+
+        <section class="painel">
+
+            <h2>Cadastrar novo caso</h2>
+
+            <p class="descricao">
+                Preencha as informações abaixo para registrar
+                um novo caso veterinário no sistema.
+            </p>
+
+            <form id="formCaso">
+
+                <div class="form-grid">
+
+                    <!-- NOME DO ANIMAL -->
+
+                    <div class="campo">
+
+                        <label for="nomeAnimal">
+                            Nome do animal *
+                        </label>
+
+                        <input
+                            type="text"
+                            id="nomeAnimal"
+                            placeholder="Ex.: Rex, Luna ou Mel"
+                            required>
+
+                        <small class="orientacao">
+                            Informe o nome do animal atendido.
+                        </small>
+
+                    </div>
+
+                    <!-- ESPÉCIE -->
+
+                    <div class="campo">
+
+                        <label for="especie">
+                            Espécie *
+                        </label>
+
+                        <select id="especie" required>
+
+                            <option value="" disabled selected>
+                                Selecione a espécie
+                            </option>
+
+                            <option value="Cao">
+                                Cão
+                            </option>
+
+                            <option value="Gato">
+                                Gato
+                            </option>
+
+                        </select>
+
+                        <small class="orientacao">
+                            Selecione a espécie do animal.
+                        </small>
+
+                    </div>
+
+                    <!-- DOENÇA -->
+
+                    <div class="campo">
+
+                        <label for="doenca">
+                            Doença *
+                        </label>
+
+                        <input
+                            type="text"
+                            id="doenca"
+                            placeholder="Ex.: Cinomose"
+                            required>
+
+                        <small class="orientacao">
+                            Informe a doença identificada
+                            pelo veterinário.
+                        </small>
+
+                    </div>
+
+                    <!-- BAIRRO -->
+
+                    <div class="campo">
+
+                        <label for="bairro">
+                            Bairro *
+                        </label>
+
+                        <input
+                            type="text"
+                            id="bairro"
+                            placeholder="Ex.: Gonzaga ou Aparecida"
+                            required>
+
+                        <small class="orientacao">
+                            Informe o bairro de Santos onde
+                            o caso foi identificado.
+                        </small>
+
+                    </div>
+
+                    <!-- GRAVIDADE -->
+
+                    <div class="campo">
+
+                        <label for="gravidade">
+                            Gravidade *
+                        </label>
+
+                        <select id="gravidade" required>
+
+                            <option value="" disabled selected>
+                                Selecione a gravidade
+                            </option>
+
+                            <option value="Baixa">
+                                Baixa
+                            </option>
+
+                            <option value="Media">
+                                Média
+                            </option>
+
+                            <option value="Alta">
+                                Alta
+                            </option>
+
+                            <option value="Critica">
+                                Crítica
+                            </option>
+
+                        </select>
+
+                        <small class="orientacao">
+                            Informe a gravidade avaliada
+                            pelo veterinário.
+                        </small>
+
+                    </div>
+
+                    <!-- VACINAÇÃO -->
+
+                    <div class="campo">
+
+                        <label for="vacinacao">
+                            Situação da vacinação *
+                        </label>
+
+                        <select id="vacinacao" required>
+
+                            <option value="" disabled selected>
+                                Selecione a situação
+                            </option>
+
+                            <option value="Pendente">
+                                Pendente
+                            </option>
+
+                            <option value="Atualizada">
+                                Atualizada
+                            </option>
+
+                        </select>
+
+                        <small class="orientacao">
+                            Informe a situação atual da
+                            vacinação do animal.
+                        </small>
+
+                    </div>
+
+                </div>
+
+                <!-- INFORMAÇÕES SOBRE O CADASTRO -->
+
+                <div class="aviso-formulario">
+
+                    <strong>Informação:</strong>
+
+                    O nível de risco e o status do caso
+                    serão definidos automaticamente pelo sistema,
+                    conforme as regras do projeto.
+
+                </div>
+
+                <p class="campos-obrigatorios">
+                    * Campos de preenchimento obrigatório.
+                </p>
+
+                <!-- BOTÕES -->
+
+                <div class="acoes-formulario">
+
+                    <button type="submit">
+                        + Cadastrar caso
+                    </button>
+
+                    <button type="reset"
+                            class="btn-secundario">
+                        Limpar formulário
+                    </button>
+
+                </div>
+
+            </form>
+
+            <p id="mensagem" role="status"></p>
+
+        </section>
+
+        <!-- LISTAGEM DOS CASOS -->
+
+        <section class="painel">
+
+            <h2>Casos cadastrados</h2>
+
+            <p class="descricao">
+                Consulte e acompanhe os registros veterinários
+                armazenados no sistema.
+            </p>
+
+
+<!-- FILTROS DE PESQUISA -->
+
+<div class="painel-filtros">
+
+    <h3>🔎 Filtros de pesquisa</h3>
+
+    <p class="descricao">
+        Utilize um ou mais filtros para localizar
+        os registros veterinários desejados.
+    </p>
+
+    <form id="formFiltros">
+
+        <div class="filtros-grid">
+
+            <div class="campo">
+                <label for="filtroNome">Nome do animal</label>
+                <input type="text"
+                       id="filtroNome"
+                       placeholder="Pesquisar animal...">
+            </div>
+
+            <div class="campo">
+                <label for="filtroDoenca">Doença</label>
+                <input type="text"
+                       id="filtroDoenca"
+                       placeholder="Pesquisar doença...">
+            </div>
+
+            <div class="campo">
+                <label for="filtroBairro">Bairro</label>
+                <input type="text"
+                       id="filtroBairro"
+                       placeholder="Pesquisar bairro...">
+            </div>
+
+            <div class="campo">
+                <label for="filtroEspecie">Espécie</label>
+
+                <select id="filtroEspecie">
+                    <option value="">Todas as espécies</option>
+                    <option value="Cao">Cão</option>
+                    <option value="Gato">Gato</option>
+                </select>
+            </div>
+
+            <div class="campo">
+                <label for="filtroGravidade">Gravidade</label>
+
+                <select id="filtroGravidade">
+                    <option value="">Todas as gravidades</option>
+                    <option value="Baixa">Baixa</option>
+                    <option value="Media">Média</option>
+                    <option value="Alta">Alta</option>
+                    <option value="Critica">Crítica</option>
+                </select>
+            </div>
+
+            <div class="campo">
+                <label for="filtroRisco">Nível de risco</label>
+
+                <select id="filtroRisco">
+                    <option value="">Todos os níveis</option>
+                    <option value="Baixo">Baixo</option>
+                    <option value="Moderado">Moderado</option>
+                    <option value="Elevado">Elevado</option>
+                    <option value="Critico">Crítico</option>
+                </select>
+            </div>
+
+            <div class="campo">
+                <label for="filtroVacinacao">Vacinação</label>
+
+                <select id="filtroVacinacao">
+                    <option value="">Todas as situações</option>
+                    <option value="Pendente">Pendente</option>
+                    <option value="Atualizada">Atualizada</option>
+                </select>
+            </div>
+
+            <div class="campo">
+                <label for="filtroStatus">Status</label>
+
+                <select id="filtroStatus">
+                    <option value="">Todos os status</option>
+                    <option value="EmAndamento">Em andamento</option>
+                    <option value="Concluido">Concluído</option>
+                </select>
+            </div>
+
+        </div>
+
+        <div class="acoes-filtros">
+
+            <button type="submit">
+                🔎 Pesquisar
+            </button>
+
+            <button type="reset"
+                    class="btn-secundario">
+                Limpar filtros
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+<div class="resultado-pesquisa">
+
+    <p id="contadorResultados" role="status">
+        Carregando registros...
+    </p>
+
+</div>
+
+<p id="erroFiltros" role="status"></p>
+
+
+            <div class="tabela-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>ID</th>
+                            <th>Animal</th>
+                            <th>Espécie</th>
+                            <th>Doença</th>
+                            <th>Bairro</th>
+                            <th>Gravidade</th>
+                            <th>Risco</th>
+                            <th>Vacinação</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="listaCasos"></tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+      
+<!-- HISTORICO DE CASOS CONCLUIDOS -->
+
+<section class="painel" id="painelConcluidos">
+
+    <h2>Histórico de casos concluídos</h2>
+
+    <p class="descricao">
+        Consulte os casos finalizados e realize a
+        reabertura quando necessário.
+    </p>
+
+    <p id="contadorConcluidos"></p>
+
+    <div class="tabela-container">
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>ID</th>
+                    <th>Animal</th>
+                    <th>Espécie</th>
+                    <th>Doença</th>
+                    <th>Bairro</th>
+                    <th>Vacinação</th>
+                    <th>Status</th>
+                    <th>Data da conclusão</th>
+                    <th>Ações</th>
+                </tr>
+
+            </thead>
+
+            <tbody id="listaConcluidos"></tbody>
+
+        </table>
+
+    </div>
+
+    <p id="erroConcluidos" role="status"></p>
+
+</section>
+  
+
+<!-- HISTORICO GERAL DE MOVIMENTACOES -->
+
+<section class="painel" id="painelHistorico">
+
+    <h2>Histórico de movimentações</h2>
+
+    <p class="descricao">
+        Acompanhe os registros de cadastro, conclusão,
+        reabertura e exclusão dos casos.
+    </p>
+
+    <div class="aviso-formulario">
+
+        <strong>Importante:</strong>
+
+        Os registros excluídos permanecem no histórico
+        para fins de acompanhamento e rastreabilidade.
+
+    </div>
+
+    <div class="tabela-container">
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>Registro</th>
+                    <th>ID do caso</th>
+                    <th>Movimentação</th>
+                    <th>Status anterior</th>
+                    <th>Novo status</th>
+                    <th>Motivo</th>
+                    <th>Data e hora</th>
+                </tr>
+
+            </thead>
+
+            <tbody id="listaHistorico"></tbody>
+
+        </table>
+
+    </div>
+
+    <p id="erroHistorico" role="status"></p>
+
+</section>
+
+
+
+    </main>
+
+    <!-- RODAPÉ -->
+
+    <footer>
+
+        <p>
+            <strong>🐾 AlertaAnimal</strong>
+        </p>
+
+        <p>
+            Sistema de Monitoramento Veterinário - Santos/SP
+        </p>
+
+        <p>
+            Projeto acadêmico desenvolvido em Haskell,
+            Servant e SQLite.
+        </p>
+
+    </footer>
+
+
+<!-- MODAL DE HISTORICO INDIVIDUAL -->
+
+<dialog id="modalHistorico" class="modal">
+
+    <div class="modal-cabecalho">
+
+        <h2 id="tituloHistorico">
+            Histórico do caso
+        </h2>
+
+        <button
+            type="button"
+            class="btn-fechar"
+            onclick="fecharHistorico()"
+            aria-label="Fechar histórico">
+
+            &times;
+
+        </button>
+
+    </div>
+
+    <p class="descricao">
+        Consulte todas as movimentações registradas
+        para este caso.
+    </p>
+
+    <div id="historicoIndividual"></div>
+
+    <div class="modal-rodape">
+
+        <button
+            type="button"
+            class="btn-secundario"
+            onclick="fecharHistorico()">
+
+            Fechar
+
+        </button>
+
+    </div>
+
+</dialog>
+
+
+<!-- MODAL DE REABERTURA E CONCLUSAO -->
+
+<dialog id="modalOperacao" class="modal">
+
+    <div class="modal-cabecalho">
+
+        <h2 id="tituloOperacao">
+            Gerenciar caso
+        </h2>
+
+        <button
+            type="button"
+            class="btn-fechar"
+            onclick="fecharOperacao()"
+            aria-label="Fechar janela">
+
+            &times;
+
+        </button>
+
+    </div>
+
+    <p id="descricaoOperacao" class="descricao"></p>
+
+    <form id="formOperacao">
+
+        <div class="campo">
+
+            <label for="motivoOperacao">
+                Motivo da operação *
+            </label>
+
+            <textarea
+                id="motivoOperacao"
+                rows="5"
+                maxlength="500"
+                placeholder="Descreva o motivo..."
+                required></textarea>
+
+        </div>
+
+        <p id="erroOperacao" role="status"></p>
+
+        <div class="modal-rodape">
+
+            <button
+                type="button"
+                class="btn-secundario"
+                onclick="fecharOperacao()">
+
+                Cancelar
+
+            </button>
+
+            <button
+                type="submit"
+                id="btnConfirmarOperacao">
+
+                Confirmar
+
+            </button>
+
+        </div>
+
+    </form>
+
+</dialog>
+
+
+<!-- MODAL DE CONFIRMACAO DE EXCLUSAO -->
+
+<dialog id="modalExclusao" class="modal">
+
+    <div class="modal-cabecalho">
+
+        <h2 class="titulo-exclusao">
+            Confirmar exclusão
+        </h2>
+
+        <button
+            type="button"
+            class="btn-fechar"
+            onclick="fecharExclusao()"
+            aria-label="Fechar janela">
+
+            &times;
+
+        </button>
+
+    </div>
+
+    <p id="descricaoExclusao"></p>
+
+    <div class="aviso-exclusao">
+
+        O caso será removido das listagens e dos
+        indicadores do sistema.
+
+        Seu histórico de movimentações será preservado.
+
+    </div>
+
+    <p id="erroExclusao" role="status"></p>
+
+    <div class="modal-rodape">
+
+        <button
+            type="button"
+            class="btn-secundario"
+            onclick="fecharExclusao()">
+
+            Cancelar
+
+        </button>
+
+        <button
+            type="button"
+            id="btnConfirmarExclusao"
+            class="btn-excluir"
+            onclick="confirmarExclusao()">
+
+            Confirmar exclusão
+
+        </button>
+
+    </div>
+
+</dialog>
+
+
+    <script src="/script.js"></script>
+
+</body>
+
+</html>
