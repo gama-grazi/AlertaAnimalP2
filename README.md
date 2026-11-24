@@ -226,6 +226,13 @@ Possíveis evoluções:
 - Validação das regras com profissionais veterinários.
 - Implantação em ambiente de produção com medidas de segurança adequadas.
 
+
+## Documentação técnica
+
+- [Documentação da API REST](docs/API.md)
+
+
+
 ## Referências técnicas
 
 - [Haskell](https://www.haskell.org/)
