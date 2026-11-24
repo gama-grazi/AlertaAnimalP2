@@ -35,6 +35,7 @@ executable alerta-animal
         text,
         time,
         bytestring,
-        transformers
+        transformers,
+        directory
 
     ghc-options: -Wall -threaded -rtsopts

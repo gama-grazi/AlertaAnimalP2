@@ -168,8 +168,7 @@ serverAPI =
 
   :<|> H.monitoramentoHandler
 
-  :<|> serveDirectoryWebApp
-        "C:/Users/gamag/AlertaAnimalp2/frontend"
+  :<|> serveDirectoryWebApp "frontend"
 
 
 -- ==========================================
